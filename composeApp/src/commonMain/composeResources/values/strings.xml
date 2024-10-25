@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KmpMovies</string>
+    <string name="back">Go back</string>
+    <string name="first_name">Nombre</string>
+    <string name="last_name">Apellidos</string>
+    <string name="paternal_surname">Apellido Paterno </string>
 </resources>

@@ -6,6 +6,7 @@ import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
 import coil3.util.DebugLogger
+import com.maxdev.kmpmovies.ui.screens.detail.DetailScreen
 import com.maxdev.kmpmovies.ui.screens.home.HomeScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -19,6 +20,6 @@ fun App() {
             .logger(DebugLogger())
             .build()
     }
-    HomeScreen()
+    Navigation()
 }
 

@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinxSerialization)
 }
 
 kotlin {
@@ -45,6 +46,10 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
             implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.contentnegotiation)
+            implementation(libs.ktor.serialization.json)
+            implementation(libs.androidx.navigation.compose)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -91,3 +96,8 @@ android {
     }
 }
 
+compose.resources {
+    publicResClass = false
+    packageOfResClass = "me.sample.library.resources"
+    generateResClass = auto
+}
