@@ -12,6 +12,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
+import com.maxdev.kmpmovies.data.database.getDatabaseBuilder
+import com.maxdev.kmpmovies.data.database.getRoomDatabase
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,13 +27,11 @@ class MainActivity : ComponentActivity() {
                 window.statusBarColor = Color.Transparent.toArgb()
                 WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkMode
             }
-            App()
+            val db = getRoomDatabase(
+                getDatabaseBuilder(LocalView.current.context)
+            )
+
+            App(db.moviesDao())
         }
     }
-}
-
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    App()
 }

@@ -1,8 +1,3 @@
 <resources>
     <string name="app_name">KmpMovies</string>
-    <string name="origin_language">Original language</string>
-    <string name="origin_title">Original title</string>
-    <string name="release_date">Release date</string>
-    <string name="popularity">Popularity</string>
-    <string name="vote_average">Vote average</string>
 </resources>

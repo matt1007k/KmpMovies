@@ -1,6 +1,7 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -8,9 +9,16 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.androidxRoom)
 }
 
 kotlin {
+    // ksp
+//    sourceSets.commonMain {
+//        kotlin.srcDirs("build/generated/ksp/metadata")
+//    }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -26,6 +34,8 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            // Required when using NativeSQLiteDriver
+            linkerOpts.add("-lsqlite3")
         }
     }
     
@@ -43,13 +53,25 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+            // Coil
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
+
+            // Ktor
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.contentnegotiation)
             implementation(libs.ktor.serialization.json)
+
+            // Navigation
             implementation(libs.androidx.navigation.compose)
+
+            // ViewModel lifecycle compose
             implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+            // Room
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundle)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -93,7 +115,12 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+        ksp(libs.androidx.room.compiler)
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 compose.resources {

@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">KmpMovies</string>
     <string name="back">Go back</string>
-    <string name="first_name">Nombre</string>
-    <string name="last_name">Apellidos</string>
-    <string name="paternal_surname">Apellido Paterno </string>
+    <string name="origin_language">Original language</string>
+    <string name="origin_title">Original title</string>
+    <string name="release_date">Release date</string>
+    <string name="popularity">Popularity</string>
+    <string name="vote_average">Vote average</string>
+    <string name="genres">Genres</string>
+
 </resources>

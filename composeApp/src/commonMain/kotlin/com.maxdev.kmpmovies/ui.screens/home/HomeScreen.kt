@@ -16,11 +16,12 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import com.maxdev.kmpmovies.data.Movie
+import com.maxdev.kmpmovies.data.MoviesRepository
+import com.maxdev.kmpmovies.data.database.MoviesDao
 import com.maxdev.kmpmovies.ui.common.LoadingIndicator
 import com.maxdev.kmpmovies.ui.screens.Screen
 import me.sample.library.resources.Res
 import me.sample.library.resources.app_name
-import me.sample.library.resources.last_name
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -79,4 +80,16 @@ fun MovieItem(movie: Movie, onClick: () -> Unit) {
             modifier = Modifier.padding(8.dp)
         )
     }
+}
+
+@Preview
+@Composable
+private fun HomeScreenPreview() {
+    HomeScreen(
+        onMovieClick = {},
+        vm = HomeViewModel(moviesRepository = MoviesRepository(
+            moviesDao = TODO(),
+            moviesService = TODO()
+        ))
+    )
 }

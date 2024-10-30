@@ -34,6 +34,12 @@ import com.maxdev.kmpmovies.ui.common.LoadingIndicator
 import com.maxdev.kmpmovies.ui.screens.Screen
 import me.sample.library.resources.Res
 import me.sample.library.resources.back
+import me.sample.library.resources.genres
+import me.sample.library.resources.origin_language
+import me.sample.library.resources.origin_title
+import me.sample.library.resources.popularity
+import me.sample.library.resources.release_date
+import me.sample.library.resources.vote_average
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -95,12 +101,11 @@ private fun DetailMovie(
         )
         Text(
             text = buildAnnotatedString {
-//                property(stringResource(Res.string.original_language), movie.originalLanguage)
-                property("Original language", movie.originalLanguage)
-                property("Original title", movie.originalTitle)
-                property("Release date", movie.releaseDate)
-                property("Popularity", movie.popularity.toString())
-                property("Vote average", movie.voteAverage.toString(), end = true)
+                property(stringResource(Res.string.origin_language), movie.originalLanguage)
+                property(stringResource(Res.string.origin_title), movie.originalTitle)
+                property(stringResource(Res.string.release_date), movie.releaseDate)
+                property(stringResource(Res.string.popularity), movie.popularity.toString())
+                property(stringResource(Res.string.vote_average), movie.voteAverage.toString(), end = true)
             },
             modifier = Modifier
                 .fillMaxWidth()

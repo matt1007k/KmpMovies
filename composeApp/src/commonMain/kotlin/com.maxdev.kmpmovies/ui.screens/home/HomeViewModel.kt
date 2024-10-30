@@ -23,10 +23,14 @@ class HomeViewModel(
     init {
         viewModelScope.launch {
             state = UiState(loading = true)
-            state = UiState(
-                loading = false,
-                movies = moviesRepository.fetchPopularMovies()
-            )
+            moviesRepository.movies.collect {
+                if(it.isNotEmpty()){
+                    state = UiState(
+                        loading = false,
+                        movies = it
+                    )
+                }
+            }
         }
     }
 
