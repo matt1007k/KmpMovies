@@ -18,7 +18,7 @@ const val DATABASE_NAME = "movies.db"
 abstract class MoviesDatabase: RoomDatabase() {
     abstract fun moviesDao(): MoviesDao
 }
-//
+
 @Suppress("NO_ACTUAL_FOR_EXPECT")
 expect object MoviesDatabaseConstructor : RoomDatabaseConstructor<MoviesDatabase> {
     override fun initialize(): MoviesDatabase

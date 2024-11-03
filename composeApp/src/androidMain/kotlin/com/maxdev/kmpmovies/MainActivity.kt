@@ -27,11 +27,11 @@ class MainActivity : ComponentActivity() {
                 window.statusBarColor = Color.Transparent.toArgb()
                 WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkMode
             }
-            val db = getRoomDatabase(
-                getDatabaseBuilder(LocalView.current.context)
-            )
+//            val db = getRoomDatabase(
+//                getDatabaseBuilder(LocalView.current.context)
+//            )
 
-            App(db.moviesDao())
+            App()
         }
     }
 }

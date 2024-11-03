@@ -16,6 +16,7 @@ data class Movie(
     val originalLanguage: String,
     val popularity: Double,
     val voteAverage: Double,
+    val isFavorite: Boolean
 )
 
 val movies = (1..100).map {
@@ -29,6 +30,7 @@ val movies = (1..100).map {
         originalTitle = "",
         originalLanguage = "",
         popularity = 0.0,
-        voteAverage = 0.0
+        voteAverage = 0.0,
+        isFavorite = false
     )
 }

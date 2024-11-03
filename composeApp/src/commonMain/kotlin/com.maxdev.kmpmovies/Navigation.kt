@@ -19,17 +19,20 @@ import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.URLProtocol
+import io.ktor.http.parametersOf
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import me.sample.library.resources.Res
 import me.sample.library.resources.api_key
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.core.parameter.parametersOf
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
-fun Navigation(moviesDao: MoviesDao) {
+fun Navigation() {
     val navController = rememberNavController()
-
-    val repository = rememberMoviesRepository(moviesDao)
 
     NavHost(navController = navController, startDestination = "home") {
         composable(route = "home") {
@@ -38,9 +41,6 @@ fun Navigation(moviesDao: MoviesDao) {
                     navController.navigate(
                         "details/${movie.id}"
                     )
-                },
-                vm = viewModel {
-                    HomeViewModel(repository)
                 }
             )
         }
@@ -50,7 +50,7 @@ fun Navigation(moviesDao: MoviesDao) {
         ) { backStackEntry ->
             val movieId = checkNotNull(backStackEntry.arguments?.getInt("movieId"))
             DetailScreen(
-                vm = viewModel { DetailViewModel(id = movieId, repository = repository) },
+                vm = koinViewModel(parameters = { parametersOf(movieId) }),
                 onBack = {
                     navController.popBackStack()
                 },
@@ -62,7 +62,6 @@ fun Navigation(moviesDao: MoviesDao) {
 @Composable
 private fun rememberMoviesRepository(
     moviesDao: MoviesDao,
-    apiKey: String = stringResource(Res.string.api_key)
 ): MoviesRepository = remember {
     val client = HttpClient {
         install(ContentNegotiation) {
@@ -74,7 +73,7 @@ private fun rememberMoviesRepository(
             url {
                 protocol = URLProtocol.HTTPS
                 host = "api.themoviedb.org"
-                parameters.append("api_key", apiKey)
+                parameters.append("api_key", BuildConfig.API_KEY)
             }
         }
     }

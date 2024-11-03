@@ -31,4 +31,12 @@ class DetailViewModel(
         val loading: Boolean = false,
         val movie: Movie? = null,
     )
+
+    fun onFavoriteClick() {
+        state.movie?.let {
+            viewModelScope.launch {
+                repository.toggleFavorite(it)
+            }
+        }
+    }
 }

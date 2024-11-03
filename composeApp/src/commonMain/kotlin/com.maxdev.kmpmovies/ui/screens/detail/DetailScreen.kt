@@ -9,6 +9,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,7 +36,7 @@ import com.maxdev.kmpmovies.ui.common.LoadingIndicator
 import com.maxdev.kmpmovies.ui.screens.Screen
 import me.sample.library.resources.Res
 import me.sample.library.resources.back
-import me.sample.library.resources.genres
+import me.sample.library.resources.favorite
 import me.sample.library.resources.origin_language
 import me.sample.library.resources.origin_title
 import me.sample.library.resources.popularity
@@ -48,7 +50,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
     val state = vm.state
-    var scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Screen {
         Scaffold(
             topBar = {
@@ -61,9 +63,19 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
                                 contentDescription = stringResource(Res.string.back)
                             )
                         }
+                    },
+                    scrollBehavior = scrollBehavior,
+                    actions = {
+                        state.movie?.let { movie ->
+                            IconButton(onClick = { vm.onFavoriteClick() }) {
+                                Icon(
+                                    imageVector = if (movie.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                    contentDescription = stringResource(Res.string.favorite)
+                                )
+                            }
+                        }
                     }
                 )
-                scrollBehavior = scrollBehavior
             }
         ) { padding ->
             LoadingIndicator(state.loading, modifier = Modifier.padding(padding))
