@@ -23,6 +23,7 @@ androidx-sqliteBundled = "2.5.0-alpha10"
 buildConfig = "5.3.5"
 koin = "3.6.0-Beta4"
 koin-compose = "1.2.0-Beta4"
+moko-permissions = "0.18.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -52,6 +53,7 @@ koin-android = { group = "io.insert-koin", name = "koin-android" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
 koin-compose = { group = "io.insert-koin", name = "koin-compose" }
 koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin-compose" }
+moko-permissions = { group = "dev.icerock.moko", name = "permissions-compose", version.ref = "moko-permissions" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -2,7 +2,8 @@ package com.maxdev.kmpmovies
 
 import androidx.room.RoomDatabase
 import com.maxdev.kmpmovies.data.MoviesRepository
-import com.maxdev.kmpmovies.data.MoviesService
+import com.maxdev.kmpmovies.data.RegionRepository
+import com.maxdev.kmpmovies.data.remote.MoviesService
 import com.maxdev.kmpmovies.data.database.MoviesDao
 import com.maxdev.kmpmovies.data.database.MoviesDatabase
 import com.maxdev.kmpmovies.ui.screens.detail.DetailViewModel
@@ -34,6 +35,7 @@ val appModule = module {
 
 val dataModule = module {
     factoryOf(::MoviesRepository)
+    factoryOf(::RegionRepository)
     factoryOf(::MoviesService)
     single<HttpClient> {
         HttpClient {

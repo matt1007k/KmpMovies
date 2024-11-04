@@ -1,5 +1,6 @@
-package com.maxdev.kmpmovies.data
+package com.maxdev.kmpmovies.data.remote
 
+import com.maxdev.kmpmovies.data.Movie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
