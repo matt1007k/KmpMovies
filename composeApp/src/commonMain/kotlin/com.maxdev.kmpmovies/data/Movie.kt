@@ -11,7 +11,7 @@ data class Movie(
     val overview: String,
     val releaseDate: String,
     val poster: String,
-    val backdrop: String?,
+    val backdrop: String? = "",
     val originalTitle: String,
     val originalLanguage: String,
     val popularity: Double,

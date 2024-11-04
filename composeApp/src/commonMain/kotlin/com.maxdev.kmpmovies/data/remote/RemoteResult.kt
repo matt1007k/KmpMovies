@@ -1,5 +1,6 @@
-package com.maxdev.kmpmovies.data
+package com.maxdev.kmpmovies.data.remote
 
+import com.maxdev.kmpmovies.data.Movie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -23,7 +24,7 @@ data class RemoteMovie(
     @SerialName("poster_path")
     val posterPath: String,
     @SerialName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String = "",
     @SerialName("original_title")
     val originalTitle: String,
     @SerialName("original_language")

@@ -2,14 +2,19 @@ package com.maxdev.kmpmovies
 
 import androidx.room.RoomDatabase
 import com.maxdev.kmpmovies.data.MoviesRepository
-import com.maxdev.kmpmovies.data.MoviesService
+import com.maxdev.kmpmovies.data.RegionRepository
+import com.maxdev.kmpmovies.data.remote.MoviesService
 import com.maxdev.kmpmovies.data.database.MoviesDao
 import com.maxdev.kmpmovies.data.database.MoviesDatabase
 import com.maxdev.kmpmovies.ui.screens.detail.DetailViewModel
 import com.maxdev.kmpmovies.ui.screens.home.HomeViewModel
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.URLProtocol
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -34,12 +39,22 @@ val appModule = module {
 
 val dataModule = module {
     factoryOf(::MoviesRepository)
+    factoryOf(::RegionRepository)
     factoryOf(::MoviesService)
     single<HttpClient> {
         HttpClient {
+            install(Logging) {
+                logger = object: Logger {
+                    override fun log(message: String) {
+                        Napier.v("HTTP Client", null, message)
+                    }
+                }
+                level = LogLevel.HEADERS
+            }
             install(ContentNegotiation) {
                 json(Json {
                     ignoreUnknownKeys = true
+                    coerceInputValues = true
                 })
             }
             install(DefaultRequest) {

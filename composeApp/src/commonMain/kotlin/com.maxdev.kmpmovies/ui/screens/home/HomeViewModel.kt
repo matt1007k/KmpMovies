@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.maxdev.kmpmovies.data.Movie
 import com.maxdev.kmpmovies.data.MoviesRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 data class UiState(
@@ -17,15 +20,15 @@ data class UiState(
 class HomeViewModel(
     private val moviesRepository: MoviesRepository
 ): ViewModel() {
-    var state by mutableStateOf(UiState())
-        private set
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> = _state.asStateFlow()
 
-    init {
+    fun getReady() {
         viewModelScope.launch {
-            state = UiState(loading = true)
+            _state.value = UiState(loading = true)
             moviesRepository.movies.collect {
                 if(it.isNotEmpty()){
-                    state = UiState(
+                    _state.value = UiState(
                         loading = false,
                         movies = it
                     )

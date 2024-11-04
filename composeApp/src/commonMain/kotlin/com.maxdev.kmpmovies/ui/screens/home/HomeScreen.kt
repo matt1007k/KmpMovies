@@ -9,6 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,7 +23,9 @@ import coil3.compose.LocalPlatformContext
 import com.maxdev.kmpmovies.data.Movie
 import com.maxdev.kmpmovies.data.MoviesRepository
 import com.maxdev.kmpmovies.ui.common.LoadingIndicator
+import com.maxdev.kmpmovies.ui.common.PermissionRequestEffect
 import com.maxdev.kmpmovies.ui.screens.Screen
+import dev.icerock.moko.permissions.Permission
 import me.sample.library.resources.Res
 import me.sample.library.resources.app_name
 import me.sample.library.resources.favorite
@@ -37,7 +41,12 @@ fun HomeScreen(
     vm: HomeViewModel = koinViewModel()
 ) {
     val context = LocalPlatformContext.current
-    val state = vm.state
+    val state by vm.state.collectAsState()
+
+    PermissionRequestEffect(Permission.COARSE_LOCATION) {
+        vm.getReady()
+    }
+
     Screen {
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
         Scaffold(
@@ -100,16 +109,4 @@ fun MovieItem(movie: Movie, onClick: () -> Unit) {
             modifier = Modifier.padding(8.dp)
         )
     }
-}
-
-@Preview
-@Composable
-private fun HomeScreenPreview() {
-    HomeScreen(
-        onMovieClick = {},
-        vm = HomeViewModel(moviesRepository = MoviesRepository(
-            moviesDao = TODO(),
-            moviesService = TODO()
-        ))
-    )
 }

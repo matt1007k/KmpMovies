@@ -56,6 +56,9 @@ kotlin {
 
             // Koin
             implementation(libs.koin.android)
+
+            // Google Play Services Location
+            implementation(libs.play.services.location)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -73,6 +76,7 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.contentnegotiation)
             implementation(libs.ktor.serialization.json)
+            implementation(libs.ktor.client.logging)
 
             // Navigation
             implementation(libs.androidx.navigation.compose)
@@ -89,6 +93,12 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+
+            // Moko permissions
+            implementation(libs.moko.permissions)
+
+            // Napier Logging
+            implementation(libs.napier)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

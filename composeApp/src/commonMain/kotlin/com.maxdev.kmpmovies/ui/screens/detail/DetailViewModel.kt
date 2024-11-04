@@ -7,21 +7,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.maxdev.kmpmovies.data.Movie
 import com.maxdev.kmpmovies.data.MoviesRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
     private val id: Int,
     private val repository: MoviesRepository
 ): ViewModel() {
-    var state by mutableStateOf(UiState())
-        private set
+    private var _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> = _state.asStateFlow()
 
     init {
         viewModelScope.launch {
-            state = UiState(loading = true)
+            _state.value = UiState(loading = true)
             repository.fetchMovieById(id).collect {
                 it?.let {
-                    state = UiState(loading = false, movie = it)
+                    _state.value = UiState(loading = false, movie = it)
                 }
             }
         }
@@ -33,7 +37,7 @@ class DetailViewModel(
     )
 
     fun onFavoriteClick() {
-        state.movie?.let {
+        _state.value.movie?.let {
             viewModelScope.launch {
                 repository.toggleFavorite(it)
             }
