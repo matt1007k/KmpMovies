@@ -10,17 +10,15 @@ import platform.Foundation.NSError
 import platform.darwin.NSObject
 import kotlin.coroutines.resume
 
-class IosRegionDataSource: RegionDataSource {
+class IosRegionDataSource : RegionDataSource {
     override suspend fun fetchRegion(): String {
-        val region = getCurrentLocation()?.toRegion() ?: DEFAULT_REGION
-        print("IosRegionDataSource fetchRegion: $region")
-        return region
+        return getCurrentLocation()?.toRegion() ?: DEFAULT_REGION
     }
 
     private suspend fun getCurrentLocation(): CLLocation? {
         val locationManager = CLLocationManager()
         return suspendCancellableCoroutine { continuation ->
-            locationManager.delegate = object: NSObject(), CLLocationManagerDelegateProtocol {
+            locationManager.delegate = object : NSObject(), CLLocationManagerDelegateProtocol {
                 override fun locationManager(
                     manager: CLLocationManager,
                     didUpdateLocations: List<*>
@@ -29,6 +27,7 @@ class IosRegionDataSource: RegionDataSource {
                     locationManager.stopUpdatingLocation()
                     continuation.resume(location)
                 }
+
                 override fun locationManager(
                     manager: CLLocationManager,
                     didFailWithError: NSError
@@ -48,7 +47,8 @@ class IosRegionDataSource: RegionDataSource {
                 if (error !== null || placemarks == null) {
                     continuation.resume(DEFAULT_REGION)
                 } else {
-                    val countryCode = placemarks.firstOrNull()?.let { (it as CLPlacemark).ISOcountryCode }
+                    val countryCode =
+                        placemarks.firstOrNull()?.let { (it as CLPlacemark).ISOcountryCode }
                     continuation.resume(countryCode ?: DEFAULT_REGION)
                 }
             }

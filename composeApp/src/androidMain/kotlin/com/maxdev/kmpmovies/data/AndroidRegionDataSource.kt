@@ -5,7 +5,6 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
-import android.util.Log
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -17,11 +16,9 @@ import kotlin.coroutines.resume
 class AndroidRegionDataSource(
     private val geocoder: Geocoder,
     private val fusedLocationClient: FusedLocationProviderClient
-): RegionDataSource {
+) : RegionDataSource {
     override suspend fun fetchRegion(): String {
-        val region = fusedLocationClient.lastLocation()?.toRegion() ?: DEFAULT_REGION
-        Log.v("AndroidRegionDataSource", "fetchRegion: $region")
-        return region
+        return fusedLocationClient.lastLocation()?.toRegion() ?: DEFAULT_REGION
     }
 
     private suspend fun Location.toRegion(): String {

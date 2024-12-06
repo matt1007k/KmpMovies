@@ -9,6 +9,7 @@ class MoviesService(
     private val client: HttpClient
 ) {
     suspend fun fetchPopularMovies(region: String): RemoteResult {
+        println("Fetching popular movies $region")
         return client.get("/3/discover/movie") {
             parameter("sort_by", "popularity.desc")
             parameter("region", region)
